@@ -1,0 +1,200 @@
+/* Estilos generales */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Contenedor principal del login */
+.login-container {
+    background: white;
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 450px;
+    text-align: center;
+    margin: auto;
+}
+
+/* Estilos para el logo del SENA */
+.sena-logo {
+    margin-bottom: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.sena-logo-img {
+    width: 210px; /* Ajusta el ancho según necesites */
+    height: auto; /* Mantiene la proporción original */
+    margin-bottom: 10px; /* Espacio entre el logo y el texto */
+}
+
+.sena-icon {
+    width: 60px;
+    height: 60px;
+    margin: 0 auto 20px;
+    position: relative;
+}
+
+.sena-circle {
+    width: 12px;
+    height: 12px;
+    background-color: #4CAF50;
+    border-radius: 50%;
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.sena-text {
+    font-size: 24px;
+    font-weight: bold;
+    color: #4CAF50;
+    letter-spacing: 2px;
+    margin-bottom: 5px;
+}
+
+.sena-lines {
+    display: flex;
+    justify-content: center;
+    gap: 3px;
+    margin-top: 5px;
+}
+
+.line {
+    width: 30px;
+    height: 4px;
+    background-color: #4CAF50;
+}
+
+.line:nth-child(2) {
+    width: 15px;
+    transform: skew(-20deg);
+}
+
+.line:nth-child(3) {
+    width: 15px;
+    transform: skew(20deg);
+}
+
+/* Encabezado */
+h1 {
+    font-size: 28px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 40px;
+    letter-spacing: 1px;
+}
+
+/* Estilos del formulario */
+.form-group {
+    margin-bottom: 25px;
+    text-align: left;
+}
+
+label {
+    display: block;
+    font-size: 16px;
+    color: #333;
+    margin-bottom: 8px;
+    font-weight: 500;
+}
+
+input[type="text"],
+input[type="password"] {
+    width: 100%;
+    padding: 15px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    font-size: 16px;
+    transition: all 0.3s ease;
+    background-color: #fff;
+}
+
+input[type="text"]:focus,
+input[type="password"]:focus {
+    outline: none;
+    border-color: #4CAF50;
+    box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.1);
+}
+
+/* Botón de inicio de sesión */
+.login-btn {
+    width: 200px;
+    padding: 15px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 25px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 20px;
+}
+
+.login-btn:hover {
+    background-color: #45a049;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(76, 175, 80, 0.3);
+}
+
+.login-btn:active {
+    transform: translateY(0);
+}
+
+/* Enlace de "Olvidé mi contraseña" */
+.forgot-password {
+    margin-top: 20px;
+}
+
+.forgot-password a {
+    color: #4CAF50;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.forgot-password a:hover {
+    text-decoration: underline;
+}
+
+/* Mensajes de error y éxito */
+.error-message {
+    background-color: #ffebee;
+    border: 1px solid #f44336;
+    color: #c62828;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
+
+.success-message {
+    background-color: #e8f5e8;
+    border: 1px solid #4CAF50;
+    color: #2e7d32;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
+
+/* Media query para pantallas más pequeñas */
+@media (max-width: 500px) {
+    .login-container {
+        padding: 30px 20px;
+    }
+
+    h1 {
+        font-size: 24px;
+    }
+
+    .sena-text {
+        font-size: 20px;
+    }
+
+    .sena-logo-img {
+        width: 80px; /* Ajusta el tamaño en pantallas pequeñas */
+    }
+}
