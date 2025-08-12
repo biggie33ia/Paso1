@@ -1,67 +1,110 @@
-import React, { useState } from "react";
-import "./Login.css";
+import React, { useState } from 'react';
+import 'Login.css';
 
-const Login = ({ onLogin }) => {
-  const [usuario, setUsuario] = useState("");
-  const [contrasena, setContrasena] = useState("");
-  const [mensaje, setMensaje] = useState("");
+const Login = () => {
+  const [usuario, setUsuario] = useState('');
+  const [contrasena, setContrasena] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
+  const [successMessage, setSuccessMessage] = useState('');
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setErrorMessage('');
+    setSuccessMessage('');
 
-    // Simulación de roles por usuario
-    if (usuario === "admin") onLogin("admin");
-    else if (usuario === "instructor") onLogin("instructor");
-    else if (usuario === "aprendiz" || usuario === "estudiante") onLogin("estudiante");
-    else setMensaje("Credenciales no válidas");
+    if (!usuario || !contrasena) {
+      setErrorMessage('Por favor, completa todos los campos');
+      return;
+    }
+
+    try {
+      // Aquí se conectaría con tu API de FastAPI
+      const response = await fetch('/api/auth/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          username: usuario,
+          password: contrasena
+        })
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        setSuccessMessage('Iniciando sesión...');
+
+        // Guardar token de autenticación
+        if (data.access_token) {
+          sessionStorage.setItem('authToken', data.access_token);
+        }
+
+        // Redirigir a la aplicación principal después de 1.5 segundos
+        setTimeout(() => {
+          window.location.href = '/dashboard';
+        }, 1500);
+      } else {
+        const errorData = await response.json();
+        setErrorMessage(errorData.detail || 'Error de autenticación');
+      }
+    } catch (error) {
+      // Para demo - simular login exitoso
+      console.log('Demo mode: Simulando login con:', { usuario, contrasena });
+      setSuccessMessage('Iniciando sesión...');
+      setTimeout(() => {
+        alert('¡Login exitoso! En un entorno real, serías redirigido al dashboard.');
+      }, 1500);
+    }
   };
 
-return (
+  const showForgotPassword = () => {
+    alert('Funcionalidad de recuperación de contraseña - por implementar');
+  };
+
+  return (
     <div className="login-container">
-        <div className="login-card">
-            <div className="logo-sena">
-                <img
-                    src="/Logosimbolo-identidad-SENA-verde-solo.png"
-                    alt="SENA logo in green, featuring a stylized person with arms outstretched. The logo appears above the text SENA in bold letters, set within a welcoming login interface."
-                />
-                <h2>SENA</h2>
-            </div>
-            <h3>INICIO DE SESIÓN</h3>
-
-            {mensaje && <div className="login-error">{mensaje}</div>}
-
-            <form onSubmit={handleSubmit}>
-                <div className="form-group">
-                    <label htmlFor="usuario">Usuario</label>
-                    <input
-                        type="text"
-                        id="usuario"
-                        value={usuario}
-                        onChange={(e) => setUsuario(e.target.value)}
-                        required
-                    />
-                </div>
-
-                <div className="form-group">
-                    <label htmlFor="contrasena">Contraseña</label>
-                    <input
-                        type="password"
-                        id="contrasena"
-                        value={contrasena}
-                        onChange={(e) => setContrasena(e.target.value)}
-                        required
-                    />
-                </div>
-
-                <button type="submit" className="btn-login">Iniciar Sesión</button>
-            </form>
-
-            <div className="forgot-password">
-                <a href="#">¿Olvidaste tu contraseña?</a>
-            </div>
+      <div className="sena-logo">
+        <img src="./Logosimbolo-identidad-SENA-verde-solo.png" alt="Logo SENA" className="sena-logo-img" />
+        <div className="sena-text">SENA</div>
+        <div className="sena-lines">
+          <div className="line"></div>
+          <div className="line"></div>
+          <div className="line"></div>
         </div>
+      </div>
+      <h1>INICIO DE SESIÓN</h1>
+      {errorMessage && <div className="error-message">{errorMessage}</div>}
+      {successMessage && <div className="success-message">{successMessage}</div>}
+      <form id="loginForm" onSubmit={handleSubmit}>
+        <div className="form-group">
+          <label htmlFor="usuario">Usuario</label>
+          <input
+            type="text"
+            id="usuario"
+            name="usuario"
+            value={usuario}
+            onChange={(e) => setUsuario(e.target.value)}
+            required
+          />
+        </div>
+        <div className="form-group">
+          <label htmlFor="contrasena">Contraseña</label>
+          <input
+            type="password"
+            id="contrasena"
+            name="contrasena"
+            value={contrasena}
+            onChange={(e) => setContrasena(e.target.value)}
+            required
+          />
+        </div>
+        <button type="submit" className="login-btn">Iniciar Sesión</button>
+      </form>
+      <div className="forgot-password">
+        <a href="#" onClick={showForgotPassword}>¿Olvidaste tu contraseña?</a>
+      </div>
     </div>
-);
+  );
 };
 
 export default Login;

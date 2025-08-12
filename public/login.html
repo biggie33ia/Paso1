@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inicio de Sesión</title>
+    <style>
+        /* Estilos generales */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #e8e8e8 0%, #f5f5f5 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        /* Contenedor principal del login */
+        .login-container {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 450px;
+            text-align: center;
+        }
+
+        /* Estilos para el logo del SENA */
+        .sena-logo {
+            margin-bottom: 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .sena-logo-img {
+            width: 210px; /* Ajusta el ancho según necesites */
+            height: auto;  /* Mantiene la proporción original */
+            margin-bottom: 10px; /* Espacio entre el logo y el texto */
+        }
+
+        .sena-icon {
+            width: 60px;
+            height: 60px;
+            margin: 0 auto 20px;
+            position: relative;
+        }
+
+        .sena-circle {
+            width: 12px;
+            height: 12px;
+            background-color: #4CAF50;
+            border-radius: 50%;
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .sena-text {
+            font-size: 24px;
+            font-weight: bold;
+            color: #4CAF50;
+            letter-spacing: 2px;
+            margin-bottom: 5px;
+        }
+
+        .sena-lines {
+            display: flex;
+            justify-content: center;
+            gap: 3px;
+            margin-top: 5px;
+        }
+
+        .line {
+            width: 30px;
+            height: 4px;
+            background-color: #4CAF50;
+        }
+
+        .line:nth-child(2) {
+            width: 15px;
+            transform: skew(-20deg);
+        }
+
+        .line:nth-child(3) {
+            width: 15px;
+            transform: skew(20deg);
+        }
+
+        /* Encabezado */
+        h1 {
+            font-size: 28px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 40px;
+            letter-spacing: 1px;
+        }
+
+        /* Estilos del formulario */
+        .form-group {
+            margin-bottom: 25px;
+            text-align: left;
+        }
+
+        label {
+            display: block;
+            font-size: 16px;
+            color: #333;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        input[type="text"],
+        input[type="password"] {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            background-color: #fff;
+        }
+
+        input[type="text"]:focus,
+        input[type="password"]:focus {
+            outline: none;
+            border-color: #4CAF50;
+            box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.1);
+        }
+
+        /* Botón de inicio de sesión */
+        .login-btn {
+            width: 200px;
+            padding: 15px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+        }
+
+        .login-btn:hover {
+            background-color: #45a049;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(76, 175, 80, 0.3);
+        }
+
+        .login-btn:active {
+            transform: translateY(0);
+        }
+
+        /* Enlace de "Olvidé mi contraseña" */
+        .forgot-password {
+            margin-top: 20px;
+        }
+
+        .forgot-password a {
+            color: #4CAF50;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .forgot-password a:hover {
+            text-decoration: underline;
+        }
+
+        /* Mensajes de error y éxito */
+        .error-message {
+            background-color: #ffebee;
+            border: 1px solid #f44336;
+            color: #c62828;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            display: none;
+        }
+
+        .success-message {
+            background-color: #e8f5e8;
+            border: 1px solid #4CAF50;
+            color: #2e7d32;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            display: none;
+        }
+
+        /* Media query para pantallas más pequeñas */
+        @media (max-width: 500px) {
+            .login-container {
+                padding: 30px 20px;
+            }
+
+            h1 {
+                font-size: 24px;
+            }
+
+            .sena-text {
+                font-size: 20px;
+            }
+
+            .sena-logo-img {
+                width: 80px; /* Ajusta el tamaño en pantallas pequeñas */
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="sena-logo">
+            <img src="./Logosimbolo-identidad-SENA-verde-solo.png" alt="Logo SENA" class="sena-logo-img">
+            <div class="sena-text">SENA</div>
+            <div class="sena-lines">
+                <div class="line"></div>
+                <div class="line"></div>
+                <div class="line"></div>
+            </div>
+        </div>
+
+        <h1>INICIO DE SESIÓN</h1>
+
+        <div class="error-message" id="errorMessage">
+            Usuario o contraseña incorrectos
+        </div>
+
+        <div class="success-message" id="successMessage">
+            Iniciando sesión...
+        </div>
+
+        <form id="loginForm">
+            <div class="form-group">
+                <label for="usuario">Usuario</label>
+                <input type="text" id="usuario" name="usuario" required>
+            </div>
+
+            <div class="form-group">
+                <label for="contrasena">Contraseña</label>
+                <input type="password" id="contrasena" name="contrasena" required>
+            </div>
+
+            <button type="submit" class="login-btn">Iniciar Sesión</button>
+        </form>
+
+        <div class="forgot-password">
+            <a href="#" onclick="showForgotPassword()">¿Olvidaste tu contraseña?</a>
+        </div>
+    </div>
+
+    <script>
+        // Funcionalidad del formulario de login
+        document.getElementById('loginForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            const usuario = document.getElementById('usuario').value;
+            const contrasena = document.getElementById('contrasena').value;
+            const errorMessage = document.getElementById('errorMessage');
+            const successMessage = document.getElementById('successMessage');
+
+            // Limpiar mensajes anteriores
+            errorMessage.style.display = 'none';
+            successMessage.style.display = 'none';
+
+            // Validación básica
+            if (!usuario || !contrasena) {
+                errorMessage.textContent = 'Por favor, completa todos los campos';
+                errorMessage.style.display = 'block';
+                return;
+            }
+
+            try {
+                // Aquí se conectaría con tu API de FastAPI
+                const response = await fetch('/api/auth/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        username: usuario,
+                        password: contrasena
+                    })
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    successMessage.style.display = 'block';
+
+                    // Guardar token de autenticación
+                    if (data.access_token) {
+                        sessionStorage.setItem('authToken', data.access_token);
+                    }
+
+                    // Redirigir a la aplicación principal después de 1.5 segundos
+                    setTimeout(() => {
+                        window.location.href = '/dashboard';
+                    }, 1500);
+                } else {
+                    const errorData = await response.json();
+                    errorMessage.textContent = errorData.detail || 'Error de autenticación';
+                    errorMessage.style.display = 'block';
+                }
+            } catch (error) {
+                // Para demo - simular login exitoso
+                console.log('Demo mode: Simulando login con:', { usuario, contrasena });
+                successMessage.style.display = 'block';
+
+                setTimeout(() => {
+                    alert('¡Login exitoso! En un entorno real, serías redirigido al dashboard.');
+                }, 1500);
+            }
+        });
+
+        // Función para manejar "olvidé contraseña"
+        function showForgotPassword() {
+            alert('Funcionalidad de recuperación de contraseña - por implementar');
+        }
+
+        // Efecto de enfoque suave en los campos
+        const inputs = document.querySelectorAll('input');
+        inputs.forEach(input => {
+            input.addEventListener('focus', function() {
+                this.parentElement.style.transform = 'translateY(-2px)';
+            });
+
+            input.addEventListener('blur', function() {
+                this.parentElement.style.transform = 'translateY(0)';
+            });
+        });
+    </script>
+</body>
+</html>
